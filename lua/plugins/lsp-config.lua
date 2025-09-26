@@ -1,3 +1,19 @@
+  -- Add filetype for Kotlin
+  vim.filetype.add({
+    extension = {
+      kt = "kotlin",
+    },
+  })
+
+  -- Add filetype for JSX/TSX
+  vim.filetype.add({
+    extension = {
+      jsx = "javascriptreact",
+      tsx = "typescriptreact",
+      p8 = "p8"
+    },
+  })
+
 return {
   -- Mason
   {
@@ -136,19 +152,4 @@ return {
   },
 
 
-  -- Add filetype for Kotlin
-  vim.filetype.add({
-    extension = {
-      kt = "kotlin",
-    },
-  })
-
-  -- Add filetype for JSX/TSX
-  vim.filetype.add({
-    extension = {
-      jsx = "javascriptreact",
-      tsx = "typescriptreact",
-      p8 = "p8"
-    },
-  }),
 }
