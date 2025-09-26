@@ -23,11 +23,14 @@ return {
           "pyright",
           "grammarly",
           "ts_ls",
-          "clangd"
+          "clangd",
+          "kotlin_language_server",
         },
       })
     end,
   },
+
+
 
   -- LSP config
   {
@@ -62,6 +65,18 @@ return {
           vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)                -- Hover Documentation
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)      -- Rename Symbol
           vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts) -- Code Action
+        end,
+      })
+
+      -- Kotlin language server setup
+      lspconfig.kotlin_language_server.setup({
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          local opts = { buffer = bufnr, desc = "Kotlin LSP Function" }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         end,
       })
 
@@ -119,6 +134,14 @@ return {
       })
     end,
   },
+
+
+  -- Add filetype for Kotlin
+  vim.filetype.add({
+    extension = {
+      kt = "kotlin",
+    },
+  })
 
   -- Add filetype for JSX/TSX
   vim.filetype.add({

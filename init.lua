@@ -141,4 +141,46 @@ end, { noremap = true })
 local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
 vim.fn.setreg("l", "yoconsole.log(\'" .. esc .. "pa\', " .. esc .. "pa);" .. esc)
 
+-- ktfmt format on save for Kotlin files
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.kt",
+  callback = function(args)
+    local filename = vim.api.nvim_buf_get_name(args.buf)
+    local cmd = string.format(
+      'java -jar /home/oscar-dalby/GitHub/ktfmt-0.58-with-dependencies.jar --kotlinlang-style "%s"',
+      filename
+    )
+    vim.fn.system(cmd)
+    vim.cmd("edit!")
+  end,
+})
 
+-- Prettier on save for js/ts files and specific directories
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.css", "*.scss", "*.md" },
+  callback = function()
+    vim.fn.system("prettier --write ./app/*")
+    vim.fn.system("prettier --write ./src/*")
+  end,
+})
+
+-- Kotlin build/run commands
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>kb",
+  ":!kotlinc src -include-runtime -d app.jar<CR>",
+  { noremap = true, silent = true }
+)
+vim.api.nvim_set_keymap("n", "<leader>kr", ":!java -jar app.jar<CR>", { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>kf',
+  function()
+    local filename = vim.fn.expand('%:p')
+    local cmd = string.format(
+      'java -jar /home/oscar-dalby/GitHub/ktfmt-0.58-with-dependencies.jar --kotlinlang-style "%s"',
+      filename
+    )
+    vim.fn.system(cmd)
+    vim.cmd('edit!')
+  end,
+  { desc = "Format current file with ktfmt" }
+)
