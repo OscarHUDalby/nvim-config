@@ -48,22 +48,12 @@ vim.api.nvim_set_keymap("n", "<S-Up>", ":resize +5<CR>", { noremap = true, silen
 vim.api.nvim_set_keymap("n", "<S-Down>", ":resize -5<CR>", { noremap = true, silent = true })
 
 -- Set the background/foreground to pure black regardless of theme
-vim.api.nvim_set_hl(0, "Normal", { fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg, bg = "black" })
-vim.api.nvim_set_hl(0, "NvimTreeNormal", { fg = "#000000", bg = "#000000" })
+-- vim.api.nvim_set_hl(0, "Normal", { fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg, bg = "black" })
+-- vim.api.nvim_set_hl(0, "NvimTreeNormal", { fg = "#000000", bg = "#000000" })
+
 -- Oil keymap
 vim.keymap.set("n", "<Leader>o", ":Oil<CR>", { noremap = true, silent = true })
 
--- Git keymaps
-vim.api.nvim_set_keymap("n", "<leader>ga", ":!git add .<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>gc",
-  ':!git commit -m "neovim auto commit"<CR>',
-  { noremap = true, silent = true }
-)
-
-vim.api.nvim_set_keymap("n", "<leader>gp", ":!git push origin main<CR>", { noremap = true, silent = true })
 
 -- Window title
 vim.opt.titlelen = 0
@@ -101,8 +91,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Go
-require("lspconfig").gopls.setup({})
 
 -- Diagnostics
 vim.diagnostic.config({
@@ -141,4 +129,25 @@ end, { noremap = true })
 local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
 vim.fn.setreg("l", "yoconsole.log(\'" .. esc .. "pa\', " .. esc .. "pa);" .. esc)
 
+-- ktfmt format on save for Kotlin files
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.kt",
+  callback = function(args)
+    local filename = vim.api.nvim_buf_get_name(args.buf)
+    local cmd = string.format(
+      'java -jar /home/oscar-dalby/GitHub/ktfmt-0.58-with-dependencies.jar --kotlinlang-style "%s"',
+      filename
+    )
+    vim.fn.system(cmd)
+    vim.cmd("edit!")
+  end,
+})
 
+-- Prettier on save for js/ts files and specific directories
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.css", "*.scss", "*.md" },
+  callback = function()
+    vim.fn.system("prettier --write ./app/*")
+    vim.fn.system("prettier --write ./src/*")
+  end,
+})
