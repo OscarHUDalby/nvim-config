@@ -1,0 +1,46 @@
+*.luac
+
+# Object files, binaries, and core dumps
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+*.dylib
+*.dll
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*~
+.netrwhist
+
+# VSCode
+.vscode/
+
+# Neovim
+*.un~
+session.*
+
+# If you use luarocks (dependency manager)
+.luarocks/
+luarocks.lock
+
+# If you use any test coverage or build tools, add their outputs
+coverage/
+build/
+dist/
