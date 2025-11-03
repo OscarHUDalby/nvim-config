@@ -48,22 +48,12 @@ vim.api.nvim_set_keymap("n", "<S-Up>", ":resize +5<CR>", { noremap = true, silen
 vim.api.nvim_set_keymap("n", "<S-Down>", ":resize -5<CR>", { noremap = true, silent = true })
 
 -- Set the background/foreground to pure black regardless of theme
-vim.api.nvim_set_hl(0, "Normal", { fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg, bg = "black" })
-vim.api.nvim_set_hl(0, "NvimTreeNormal", { fg = "#000000", bg = "#000000" })
+-- vim.api.nvim_set_hl(0, "Normal", { fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg, bg = "black" })
+-- vim.api.nvim_set_hl(0, "NvimTreeNormal", { fg = "#000000", bg = "#000000" })
+
 -- Oil keymap
 vim.keymap.set("n", "<Leader>o", ":Oil<CR>", { noremap = true, silent = true })
 
--- Git keymaps
-vim.api.nvim_set_keymap("n", "<leader>ga", ":!git add .<CR>", { noremap = true, silent = true })
-
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>gc",
-  ':!git commit -m "neovim auto commit"<CR>',
-  { noremap = true, silent = true }
-)
-
-vim.api.nvim_set_keymap("n", "<leader>gp", ":!git push origin main<CR>", { noremap = true, silent = true })
 
 -- Window title
 vim.opt.titlelen = 0
@@ -101,8 +91,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Go
-require("lspconfig").gopls.setup({})
 
 -- Diagnostics
 vim.diagnostic.config({
@@ -163,24 +151,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.fn.system("prettier --write ./src/*")
   end,
 })
-
--- Kotlin build/run commands
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>kb",
-  ":!kotlinc src -include-runtime -d app.jar<CR>",
-  { noremap = true, silent = true }
-)
-vim.api.nvim_set_keymap("n", "<leader>kr", ":!java -jar app.jar<CR>", { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>kf',
-  function()
-    local filename = vim.fn.expand('%:p')
-    local cmd = string.format(
-      'java -jar /home/oscar-dalby/GitHub/ktfmt-0.58-with-dependencies.jar --kotlinlang-style "%s"',
-      filename
-    )
-    vim.fn.system(cmd)
-    vim.cmd('edit!')
-  end,
-  { desc = "Format current file with ktfmt" }
-)
