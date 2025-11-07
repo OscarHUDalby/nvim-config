@@ -5,7 +5,7 @@ return {
   event = "BufReadPost",
   cmd = { "TodoTrouble", "TodoLocList", "TodoQuickFix", "TodoTelescope" },
   init = function()
-    vim.keymap.set("n", "<leader>fT", "<cmd>TodoTelescope<cr>", { desc = "Todo | Telescope", silent = true })
+    vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Todo | Telescope", silent = true })
   end,
   opts = {
     signs = true,      -- show icons in the signs column
