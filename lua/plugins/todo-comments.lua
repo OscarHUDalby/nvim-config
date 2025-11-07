@@ -21,7 +21,7 @@ return {
       TODO = { icon = " ", color = "info" },
       HACK = { icon = " ", color = "warning" },
       WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-      FKD = { icon = " ", color = "error", alt = { "FUCKED" } },
+      FKD = { icon = " ", color = "error", alt = { "PETETONG", "BROKEN", "NOTLIKETHIS", "JFC", "SOS" } },
       PERF = { icon = "󰥔 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
       NOTE = { icon = "󱞁 ", color = "hint", alt = { "INFO", "NEXT" } },
       TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED", "UNTESTED" } },
