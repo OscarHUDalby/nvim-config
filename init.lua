@@ -20,14 +20,19 @@ vim.wo.number = true
 require("vim-options")
 require("lazy").setup("plugins")
 
--- Format on save
+-- Format on save -- excludes jsx/tsx/js/ts
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
   callback = function(args)
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = args.buf,
       callback = function()
-        vim.lsp.buf.format({ async = false, id = args.data.client_id })
+        -- local ignore_ft = { javascript = true, javascriptreact = true, typescript = true, typescriptreact = true }
+        local ignore_ft = {}
+        local ft = vim.bo[args.buf].filetype
+        if not ignore_ft[ft] then
+          vim.lsp.buf.format({ async = false, id = args.data.client_id })
+        end
       end,
     })
   end,
@@ -144,10 +149,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Prettier on save for js/ts files and specific directories
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.css", "*.scss", "*.md" },
-  callback = function()
-    vim.fn.system("prettier --write ./app/*")
-    vim.fn.system("prettier --write ./src/*")
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.css", "*.scss", "*.md" },
+--   callback = function()
+--     vim.fn.system("prettier --write ./app/*")
+--     vim.fn.system("prettier --write ./src/*")
+--   end,
+-- })
