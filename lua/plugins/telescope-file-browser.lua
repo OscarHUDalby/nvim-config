@@ -2,9 +2,13 @@ return {
   "nvim-telescope/telescope-file-browser.nvim",
   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   config = function()
-    -- vim.keymap.set("n", "<space>fb", ":Telescope file_browser<CR>")
+    require("telescope").setup({
+      defaults = {
+        file_ignore_patterns = { "node_modules/", ".git/", "dist/", "build/", ".venv", "venv" }
+      }
+    })
 
-    -- open file_browser with the path of the current buffer
     vim.keymap.set("n", "<space>fb", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+    vim.keymap.set("n", "<space>ff", ":Telescope find_files<CR>")
   end,
 }
