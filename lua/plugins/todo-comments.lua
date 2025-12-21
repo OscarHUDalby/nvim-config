@@ -18,10 +18,11 @@ return {
         alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
         -- signs = false, -- configure signs for some keywords individually
       },
+      UNSURE = { icon = " ", color = "warning", alt = { "QUESTION", "DOUBT", "IDK" } },
       TODO = { icon = " ", color = "info" },
       HACK = { icon = " ", color = "warning" },
       WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-      FKD = { icon = " ", color = "error", alt = { "PETETONG", "BROKEN", "NOTLIKETHIS", "JFC", "SOS" } },
+      FKD = { icon = " ", color = "error", alt = { "PETETONG", "BROKEN", "NOTLIKETHIS", "JFC", "SOS", "HELPME" } },
       PERF = { icon = "󰥔 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
       NOTE = { icon = "󱞁 ", color = "hint", alt = { "INFO", "NEXT" } },
       TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED", "UNTESTED" } },

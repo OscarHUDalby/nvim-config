@@ -20,6 +20,7 @@ vim.wo.number = true
 require("vim-options")
 require("lazy").setup("plugins")
 
+
 -- Format on save
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp", { clear = true }),
@@ -128,26 +129,3 @@ end, { noremap = true })
 -- Macros
 local esc = vim.api.nvim_replace_termcodes("<Esc>", true, true, true)
 vim.fn.setreg("l", "yoconsole.log(\'" .. esc .. "pa\', " .. esc .. "pa);" .. esc)
-
--- ktfmt format on save for Kotlin files
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.kt",
-  callback = function(args)
-    local filename = vim.api.nvim_buf_get_name(args.buf)
-    local cmd = string.format(
-      'java -jar /home/oscar-dalby/GitHub/ktfmt-0.58-with-dependencies.jar --kotlinlang-style "%s"',
-      filename
-    )
-    vim.fn.system(cmd)
-    vim.cmd("edit!")
-  end,
-})
-
--- Prettier on save for js/ts files and specific directories
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx", "*.json", "*.css", "*.scss", "*.md" },
-  callback = function()
-    vim.fn.system("prettier --write ./app/*")
-    vim.fn.system("prettier --write ./src/*")
-  end,
-})

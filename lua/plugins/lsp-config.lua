@@ -27,6 +27,7 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
+          "omnisharp",
           "bashls",
           "tailwindcss",
           "dockerls",
@@ -41,6 +42,7 @@ return {
           "ts_ls",
           "clangd",
           "kotlin_language_server",
+          "rust_analyzer",
         },
       })
     end,
@@ -112,6 +114,30 @@ return {
             capabilities = capabilities,
             on_attach = function(client, bufnr)
               local opts = { buffer = bufnr, desc = "PICO-8 LSP Function" }
+              vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+              vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+              vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+              vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+            end,
+          })
+        end,
+      })
+
+
+      -- C# (OmniSharp)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "cs" },
+        callback = function()
+          vim.lsp.start({
+            name = "omnisharp",
+            cmd = { "omnisharp" },
+            root_dir = vim.fs.dirname(
+              vim.fs.find({ "*.sln", "*.csproj", ".git" }, { upward = true })[1]
+            ),
+            filetypes = { "cs" },
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+              local opts = { buffer = bufnr, desc = "C# LSP Function" }
               vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
               vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
               vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
@@ -199,9 +225,33 @@ return {
           })
         end,
       })
-      -- Add more autocmds for other servers as needed!
+
+      -- Rust (rust-analyzer)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "rust" },
+        callback = function()
+          vim.lsp.start({
+            name = "rust_analyzer",
+            cmd = { "rust-analyzer" },
+            root_dir = vim.fs.dirname(
+              vim.fs.find({ "Cargo.toml", "rust-project.json", ".git" }, { upward = true })[1]
+            ),
+            filetypes = { "rust" },
+            capabilities = capabilities,
+            on_attach = function(client, bufnr)
+              local opts = { buffer = bufnr, desc = "Rust LSP Function" }
+              vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+              vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+              vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+              vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+            end,
+          })
+        end,
+      })
     end,
   },
+
+
 
   -- Completion setup
   {

@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   "https://github.com/Maan2003/lsp_lines.nvim",
   event = "VeryLazy",
   config = function()
