@@ -33,7 +33,7 @@ return {
           "dockerls",
           "gopls",
           "html",
-          "spectral",
+          -- "spectral",
           "lua_ls",
           "marksman",
           "pico8_ls",
