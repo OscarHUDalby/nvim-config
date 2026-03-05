@@ -92,6 +92,9 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- copy relative file path to clipboard
+vim.api.nvim_set_keymap("n", "<leader>fc", ":let @+=expand('%:p')<CR>", { noremap = true, silent = true })
+
 
 -- Diagnostics
 vim.diagnostic.config({

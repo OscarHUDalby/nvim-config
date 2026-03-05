@@ -1,6 +1,17 @@
 return {
   "windwp/nvim-ts-autotag",
   config = function()
-    require("nvim-ts-autotag").setup()
+    require("nvim-ts-autotag").setup({
+      filetypes = {
+        "html",
+        "xml",
+        "javascriptreact",
+        "typescriptreact",
+        "svelte",
+        "vue",
+        "tsx",
+        "jsx",
+      },
+    })
   end,
 }
